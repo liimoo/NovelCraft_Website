@@ -3,9 +3,9 @@
  * NovelCraft トップページテンプレート
  */
 get_header();
+$theme_url = get_stylesheet_directory_uri();
 ?>
 <style>
-/* ===== 基本設定 ===== */
 .nc-page * { box-sizing: border-box; margin: 0; padding: 0; }
 .nc-page {
   font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
@@ -23,99 +23,98 @@ get_header();
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 80px 24px 120px;
-  background: linear-gradient(160deg, #fff0fb 0%, #f0e8ff 40%, #e8f4ff 100%);
+  padding: 100px 24px 160px;
   overflow: hidden;
 }
-
-/* 背景の丸デコ */
-.nc-hero::before {
-  content: '';
+.nc-hero-bg {
   position: absolute;
-  width: 600px; height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(216,180,254,0.35) 0%, transparent 70%);
-  top: -100px; right: -150px;
-  pointer-events: none;
+  inset: 0;
+  background-image: url('<?php echo $theme_url; ?>/novel-assets/bg/hero_bg.png');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.55) saturate(0.9);
 }
-.nc-hero::after {
-  content: '';
+.nc-hero-overlay {
   position: absolute;
-  width: 400px; height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(186,230,253,0.4) 0%, transparent 70%);
-  bottom: -50px; left: -100px;
-  pointer-events: none;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,5,30,0.3) 0%,
+    rgba(10,5,30,0.2) 50%,
+    rgba(253,248,255,1) 100%
+  );
 }
 
-/* 浮かぶデコ要素 */
-.nc-deco {
+/* ヒーローのキャラクター */
+.nc-hero-chara {
   position: absolute;
+  bottom: 80px;
+  height: 75%;
+  max-height: 580px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 32px rgba(80,30,150,0.4));
   pointer-events: none;
-  font-size: 28px;
-  animation: nc-float var(--dur, 4s) var(--delay, 0s) ease-in-out infinite;
-  opacity: 0.7;
+  animation: nc-float 5s ease-in-out infinite;
 }
+.nc-hero-chara-left  { left: 2%;  transform-origin: bottom left; }
+.nc-hero-chara-right { right: 2%; transform-origin: bottom right; animation-delay: -2s; }
 @keyframes nc-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-14px) rotate(8deg); }
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+@media (max-width: 900px) {
+  .nc-hero-chara-left  { left: -5%; height: 55%; }
+  .nc-hero-chara-right { right: -5%; height: 55%; }
+}
+@media (max-width: 600px) {
+  .nc-hero-chara { display: none; }
 }
 
-/* ロゴ */
+/* ロゴ・テキスト */
+.nc-hero-content { position: relative; z-index: 2; }
 .nc-logo-title {
-  font-size: clamp(56px, 11vw, 110px);
+  font-size: clamp(52px, 10vw, 100px);
   font-weight: 900;
   letter-spacing: 0.03em;
   line-height: 1;
-  background: linear-gradient(135deg, #c026d3 0%, #7c3aed 50%, #2563eb 100%);
+  background: linear-gradient(135deg, #fff 0%, #e8d5ff 50%, #bfdbfe 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 4px 12px rgba(192,38,211,0.2));
+  filter: drop-shadow(0 4px 24px rgba(150,80,255,0.5));
 }
 .nc-logo-yomi {
   font-size: clamp(13px, 2.5vw, 17px);
   letter-spacing: 0.5em;
-  color: #a855f7;
+  color: rgba(230,210,255,0.9);
   margin-top: 6px;
-  margin-bottom: 32px;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 28px;
   font-weight: 500;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
-
 .nc-hero-catch {
-  font-size: clamp(22px, 4vw, 38px);
+  font-size: clamp(20px, 3.5vw, 34px);
   font-weight: 800;
   line-height: 1.6;
   margin-bottom: 18px;
-  position: relative;
-  z-index: 1;
-  color: #3a2460;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.4);
 }
-.nc-hero-catch .nc-pink { color: #c026d3; }
-.nc-hero-catch .nc-blue { color: #2563eb; }
-
+.nc-hero-catch .nc-pink { color: #f9a8d4; }
+.nc-hero-catch .nc-blue { color: #bfdbfe; }
 .nc-hero-desc {
-  font-size: clamp(14px, 2vw, 17px);
-  color: #7c6fa0;
+  font-size: clamp(13px, 2vw, 16px);
+  color: rgba(240,235,255,0.85);
   line-height: 1.9;
-  max-width: 500px;
-  margin-bottom: 44px;
-  position: relative;
-  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto 40px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
-
-/* ボタン */
 .nc-hero-buttons {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
-  z-index: 1;
 }
 .nc-btn {
   display: inline-block;
@@ -132,57 +131,54 @@ get_header();
 .nc-btn-primary {
   background: linear-gradient(135deg, #c026d3, #7c3aed);
   color: #fff;
-  box-shadow: 0 6px 24px rgba(192,38,211,0.35);
+  box-shadow: 0 6px 24px rgba(192,38,211,0.45);
 }
 .nc-btn-primary:hover {
   transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 10px 32px rgba(192,38,211,0.45);
+  box-shadow: 0 10px 32px rgba(192,38,211,0.6);
   color: #fff;
 }
 .nc-btn-secondary {
-  background: #fff;
-  color: #7c3aed;
-  box-shadow: 0 4px 16px rgba(124,58,237,0.15);
-  border: 2px solid rgba(124,58,237,0.2);
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.5);
+  backdrop-filter: blur(4px);
 }
 .nc-btn-secondary:hover {
-  transform: translateY(-3px) scale(1.03);
-  border-color: #7c3aed;
-  color: #7c3aed;
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-3px);
+  color: #fff;
 }
 
-/* スクロールヒント */
 .nc-scroll-hint {
   position: absolute;
-  bottom: 32px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 2;
   font-size: 11px;
   letter-spacing: 0.25em;
-  color: #c084fc;
+  color: rgba(255,255,255,0.6);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
   animation: nc-bounce 2s ease-in-out infinite;
-  z-index: 1;
 }
-.nc-scroll-hint::after {
-  content: '↓';
-  font-size: 16px;
-}
+.nc-scroll-hint::after { content: '↓'; font-size: 16px; }
 @keyframes nc-bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(6px); }
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(6px); }
 }
 
-/* ===== ノベルウィンドウデモ ===== */
+/* ===== デモウィンドウ ===== */
 .nc-demo-section {
-  padding: 70px 20px;
-  background: linear-gradient(180deg, #f0e8ff 0%, #fdf8ff 100%);
+  padding: 0 20px 80px;
+  background: #fdf8ff;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: -1px;
 }
 .nc-demo-label {
   font-size: 12px;
@@ -190,41 +186,45 @@ get_header();
   color: #a78bfa;
   margin-bottom: 20px;
   font-weight: 600;
+  padding-top: 60px;
 }
 .nc-demo-screen {
   width: 100%;
-  max-width: 680px;
+  max-width: 720px;
   aspect-ratio: 16/9;
   border-radius: 20px;
   overflow: hidden;
-  background: linear-gradient(135deg, #2d1b69 0%, #1e3a5f 100%);
-  box-shadow: 0 20px 60px rgba(124,58,237,0.2), 0 4px 20px rgba(0,0,0,0.1);
   position: relative;
   display: flex;
   align-items: flex-end;
-  border: 3px solid rgba(216,180,254,0.5);
+  border: 3px solid rgba(216,180,254,0.4);
+  box-shadow: 0 20px 60px rgba(124,58,237,0.15), 0 4px 20px rgba(0,0,0,0.08);
 }
-.nc-demo-bg {
+.nc-demo-bg-img {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(139,92,246,0.25) 0%, transparent 70%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85);
 }
-.nc-demo-char {
+.nc-demo-char-img {
   position: absolute;
-  bottom: 80px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: clamp(60px, 12vw, 100px);
-  animation: nc-float 3s ease-in-out infinite;
-  filter: drop-shadow(0 8px 20px rgba(192,38,211,0.4));
+  height: 80%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 16px rgba(80,30,150,0.4));
+  animation: nc-float 4s ease-in-out infinite;
 }
 .nc-demo-window {
   position: relative;
   width: 100%;
-  padding: 16px 22px 20px;
+  padding: 14px 22px 18px;
   background: rgba(253,248,255,0.92);
   backdrop-filter: blur(8px);
-  border-top: 2px solid rgba(216,180,254,0.6);
+  border-top: 2px solid rgba(216,180,254,0.5);
 }
 .nc-demo-name-tag {
   display: inline-block;
@@ -252,17 +252,13 @@ get_header();
   border-radius: 2px;
   animation: nc-blink 1s step-end infinite;
 }
-@keyframes nc-blink {
-  0%, 100% { opacity: 1; } 50% { opacity: 0; }
-}
+@keyframes nc-blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-/* ===== セクション共通 ===== */
-.nc-section {
-  padding: 90px 24px;
-}
-.nc-section-head {
+/* ===== キャラクター紹介 ===== */
+.nc-characters {
+  padding: 80px 24px;
+  background: linear-gradient(180deg, #fdf8ff 0%, #f5f0ff 100%);
   text-align: center;
-  margin-bottom: 56px;
 }
 .nc-section-tag {
   display: inline-block;
@@ -274,23 +270,59 @@ get_header();
   border: 1px solid rgba(168,85,247,0.25);
   padding: 5px 16px;
   border-radius: 20px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
-.nc-section-head h2 {
-  font-size: clamp(26px, 5vw, 42px);
+.nc-section-title {
+  font-size: clamp(26px, 5vw, 40px);
   font-weight: 800;
   color: #3a2460;
-  line-height: 1.35;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
-.nc-section-head p {
+.nc-section-lead {
   font-size: 15px;
   color: #7c6fa0;
-  line-height: 1.8;
+  margin-bottom: 56px;
+}
+.nc-chara-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: end;
+}
+.nc-chara-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+.nc-chara-item:hover { transform: translateY(-12px); }
+.nc-chara-item img {
+  width: 100%;
+  max-width: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(124,58,237,0.2));
+}
+.nc-chara-name {
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #7c3aed;
+  letter-spacing: 0.1em;
+}
+@media (max-width: 720px) {
+  .nc-chara-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 400px) {
+  .nc-chara-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ===== 特徴カード ===== */
-.nc-features { background: #fdf8ff; }
+.nc-features {
+  padding: 90px 24px;
+  background: #fdf8ff;
+}
 .nc-features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -313,7 +345,6 @@ get_header();
   top: 0; left: 0; right: 0;
   height: 4px;
   background: var(--card-grad);
-  border-radius: 4px 4px 0 0;
 }
 .nc-card:hover {
   transform: translateY(-6px);
@@ -322,60 +353,26 @@ get_header();
 }
 .nc-card-icon { font-size: 44px; margin-bottom: 16px; display: block; }
 .nc-card h3 { font-size: 18px; font-weight: 700; color: #3a2460; margin-bottom: 10px; }
-.nc-card p { font-size: 14px; color: #7c6fa0; line-height: 1.85; }
-
-/* ===== 2カラム ===== */
-.nc-split { background: #f5f0ff; }
-.nc-split-inner {
-  max-width: 1060px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
-  align-items: center;
-}
-.nc-split-inner.nc-rev { direction: rtl; }
-.nc-split-inner.nc-rev > * { direction: ltr; }
-
-.nc-split-visual {
-  background: linear-gradient(135deg, #f5f0ff, #e8f4ff);
-  border-radius: 24px;
-  aspect-ratio: 4/3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 90px;
-  border: 2px solid rgba(216,180,254,0.4);
-  animation: nc-float 4s ease-in-out infinite;
-}
-.nc-split-text .nc-tag-sm {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  color: #c026d3;
-  margin-bottom: 16px;
-}
-.nc-split-text h2 {
-  font-size: clamp(22px, 3.5vw, 34px);
-  font-weight: 800;
-  color: #3a2460;
-  margin-bottom: 16px;
-  line-height: 1.4;
-}
-.nc-split-text p {
-  font-size: 15px;
-  color: #7c6fa0;
-  line-height: 1.9;
-}
+.nc-card p  { font-size: 14px; color: #7c6fa0; line-height: 1.85; }
 
 /* ===== 開発中バナー ===== */
 .nc-dev {
-  background: linear-gradient(135deg, #fdf0ff 0%, #f0f0ff 100%);
-  border-top: 2px dashed rgba(168,85,247,0.2);
-  border-bottom: 2px dashed rgba(168,85,247,0.2);
+  padding: 80px 24px;
+  background: linear-gradient(135deg, #fdf0ff, #f0f0ff);
   text-align: center;
+  border-top: 2px dashed rgba(168,85,247,0.2);
+  position: relative;
+  overflow: hidden;
 }
+.nc-dev-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.08;
+}
+.nc-dev-inner { position: relative; z-index: 1; }
 .nc-dev-badge {
   display: inline-block;
   font-size: 11px;
@@ -387,19 +384,8 @@ get_header();
   border-radius: 20px;
   margin-bottom: 22px;
 }
-.nc-dev h2 {
-  font-size: clamp(22px, 4vw, 36px);
-  font-weight: 800;
-  color: #3a2460;
-  margin-bottom: 14px;
-}
-.nc-dev p {
-  color: #7c6fa0;
-  font-size: 15px;
-  line-height: 1.85;
-  max-width: 480px;
-  margin: 0 auto 32px;
-}
+.nc-dev h2 { font-size: clamp(22px, 4vw, 36px); font-weight: 800; color: #3a2460; margin-bottom: 14px; }
+.nc-dev p { color: #7c6fa0; font-size: 15px; line-height: 1.85; max-width: 480px; margin: 0 auto 32px; }
 
 /* ===== フッター ===== */
 .nc-footer {
@@ -410,45 +396,38 @@ get_header();
   font-size: 13px;
 }
 .nc-footer a { color: rgba(216,180,254,0.7); text-decoration: none; }
-
-/* ===== レスポンシブ ===== */
-@media (max-width: 720px) {
-  .nc-split-inner,
-  .nc-split-inner.nc-rev { grid-template-columns: 1fr; direction: ltr; }
-}
 </style>
 
 <div class="nc-page">
 
   <!-- ヒーロー -->
   <section class="nc-hero">
-    <!-- 浮かぶデコ -->
-    <div class="nc-deco" style="top:12%;left:8%;--dur:4.5s;--delay:-1s;">✨</div>
-    <div class="nc-deco" style="top:20%;right:10%;--dur:3.8s;--delay:-2s;">💜</div>
-    <div class="nc-deco" style="bottom:25%;left:12%;--dur:5s;--delay:-0.5s;">⭐</div>
-    <div class="nc-deco" style="bottom:30%;right:8%;--dur:4s;--delay:-3s;">🌸</div>
-    <div class="nc-deco" style="top:40%;left:4%;--dur:3.5s;--delay:-1.5s;">📖</div>
-    <div class="nc-deco" style="top:55%;right:5%;--dur:4.2s;--delay:-2.5s;">🎀</div>
+    <div class="nc-hero-bg"></div>
+    <div class="nc-hero-overlay"></div>
 
-    <div class="nc-logo-title">NovelCraft</div>
-    <div class="nc-logo-yomi">ノベクラ</div>
+    <!-- 左右キャラクター -->
+    <img class="nc-hero-chara nc-hero-chara-left"
+         src="<?php echo $theme_url; ?>/novel-assets/characters/chara3.png" alt="">
+    <img class="nc-hero-chara nc-hero-chara-right"
+         src="<?php echo $theme_url; ?>/novel-assets/characters/chara2.png" alt="">
 
-    <div class="nc-hero-catch">
-      <span class="nc-pink">読む</span>喜びと、<br>
-      <span class="nc-blue">つくる</span>たのしさを。
+    <div class="nc-hero-content">
+      <div class="nc-logo-title">NovelCraft</div>
+      <div class="nc-logo-yomi">ノベクラ</div>
+      <div class="nc-hero-catch">
+        <span class="nc-pink">読む</span>喜びと、<br>
+        <span class="nc-blue">つくる</span>たのしさを。
+      </div>
+      <p class="nc-hero-desc">
+        ノベクラは、ビジュアルノベルを<strong>プレイ</strong>する楽しさと<br>
+        自分で<strong>制作</strong>できる喜びをひとつにした<br>
+        ノベルゲームプラットフォームです🎉
+      </p>
+      <div class="nc-hero-buttons">
+        <a href="#characters" class="nc-btn nc-btn-primary">✨ キャラを見る</a>
+        <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>" class="nc-btn nc-btn-secondary">📝 開発日記を読む</a>
+      </div>
     </div>
-
-    <p class="nc-hero-desc">
-      ノベクラは、ビジュアルノベルを<strong>プレイ</strong>する楽しさと<br>
-      自分で<strong>制作</strong>できる喜びをひとつにした<br>
-      ノベルゲームプラットフォームです🎉
-    </p>
-
-    <div class="nc-hero-buttons">
-      <a href="#features" class="nc-btn nc-btn-primary">✨ 特徴を見てみる</a>
-      <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>" class="nc-btn nc-btn-secondary">📝 開発日記を読む</a>
-    </div>
-
     <div class="nc-scroll-hint">SCROLL</div>
   </section>
 
@@ -456,8 +435,10 @@ get_header();
   <section class="nc-demo-section">
     <p class="nc-demo-label">✦ NOVEL WINDOW ✦</p>
     <div class="nc-demo-screen">
-      <div class="nc-demo-bg"></div>
-      <div class="nc-demo-char">🧑‍🎤</div>
+      <img class="nc-demo-bg-img"
+           src="<?php echo $theme_url; ?>/novel-assets/bg/classroom.png" alt="">
+      <img class="nc-demo-char-img"
+           src="<?php echo $theme_url; ?>/novel-assets/characters/chara1.png" alt="" id="nc-demo-char-img">
       <div class="nc-demo-window">
         <div class="nc-demo-name-tag" id="nc-demo-name">???</div>
         <div class="nc-demo-text">
@@ -467,83 +448,81 @@ get_header();
     </div>
   </section>
 
+  <!-- キャラクター紹介 -->
+  <section class="nc-characters" id="characters">
+    <div class="nc-section-tag">CHARACTERS</div>
+    <h2 class="nc-section-title">個性豊かなキャラクターたち 🌸</h2>
+    <p class="nc-section-lead">ノベクラに登場するキャラクターをご紹介。物語の世界で出会いましょう。</p>
+    <div class="nc-chara-grid">
+      <div class="nc-chara-item">
+        <img src="<?php echo $theme_url; ?>/novel-assets/characters/chara1.png" alt="キャラクター1">
+        <div class="nc-chara-name">ST-01</div>
+      </div>
+      <div class="nc-chara-item">
+        <img src="<?php echo $theme_url; ?>/novel-assets/characters/chara2.png" alt="キャラクター2">
+        <div class="nc-chara-name">ST-02</div>
+      </div>
+      <div class="nc-chara-item">
+        <img src="<?php echo $theme_url; ?>/novel-assets/characters/chara3.png" alt="キャラクター3">
+        <div class="nc-chara-name">ST-03</div>
+      </div>
+      <div class="nc-chara-item">
+        <img src="<?php echo $theme_url; ?>/novel-assets/characters/chara4.png" alt="キャラクター4">
+        <div class="nc-chara-name">ST-05</div>
+      </div>
+    </div>
+  </section>
+
   <!-- 特徴 -->
-  <section class="nc-section nc-features" id="features">
-    <div class="nc-section-head">
+  <section class="nc-features" id="features">
+    <div style="text-align:center;margin-bottom:56px;">
       <div class="nc-section-tag">FEATURES</div>
-      <h2>ノベクラでできること 🌟</h2>
-      <p>遊ぶ人も、つくる人も。みんなのためのノベルプラットフォーム。</p>
+      <h2 class="nc-section-title">ノベクラでできること 🌟</h2>
+      <p class="nc-section-lead">遊ぶ人も、つくる人も。みんなのためのノベルプラットフォーム。</p>
     </div>
     <div class="nc-features-grid">
-
-      <div class="nc-card" style="--card-grad: linear-gradient(90deg,#c026d3,#7c3aed);">
+      <div class="nc-card" style="--card-grad:linear-gradient(90deg,#c026d3,#7c3aed)">
         <span class="nc-card-icon">📖</span>
         <h3>リッチなノベル体験</h3>
-        <p>キャラクターの立ち絵、背景、選択肢が連動した本格ビジュアルノベルをお楽しみいただけます。テキスト速度もお好みで調整できます。</p>
+        <p>キャラクターの立ち絵、背景、選択肢が連動した本格ビジュアルノベルをお楽しみいただけます。</p>
       </div>
-
-      <div class="nc-card" style="--card-grad: linear-gradient(90deg,#7c3aed,#2563eb);">
+      <div class="nc-card" style="--card-grad:linear-gradient(90deg,#7c3aed,#2563eb)">
         <span class="nc-card-icon">✏️</span>
         <h3>ノベル制作エディタ</h3>
-        <p>コーディング不要で自分だけのノベルが作れるCraftモードを開発中！Undo/Redoに対応した直感的な編集環境です。</p>
+        <p>コーディング不要で自分だけのノベルが作れるCraftモードを開発中！直感的な編集環境です。</p>
       </div>
-
-      <div class="nc-card" style="--card-grad: linear-gradient(90deg,#2563eb,#06b6d4);">
+      <div class="nc-card" style="--card-grad:linear-gradient(90deg,#2563eb,#06b6d4)">
         <span class="nc-card-icon">💬</span>
         <h3>豊かなテキスト表現</h3>
-        <p>色・サイズ変更、ルビ（振り仮名）など多彩なテキスト装飾に対応。セリフひとつひとつに個性を込められます。</p>
+        <p>色・サイズ変更、ルビ（振り仮名）など多彩なテキスト装飾に対応。セリフに個性を込められます。</p>
       </div>
-
-      <div class="nc-card" style="--card-grad: linear-gradient(90deg,#ec4899,#f43f5e);">
+      <div class="nc-card" style="--card-grad:linear-gradient(90deg,#ec4899,#f43f5e)">
         <span class="nc-card-icon">🎭</span>
-        <h3>かわいいキャラ演出</h3>
-        <p>複数の衣装・表情を持つキャラクターが登場！話しているキャラを自動ハイライト表示し、場面を盛り上げます。</p>
+        <h3>キャラクター演出</h3>
+        <p>複数の衣装・表情を持つキャラクターが登場！話しているキャラを自動ハイライト表示します。</p>
       </div>
-
-      <div class="nc-card" style="--card-grad: linear-gradient(90deg,#10b981,#06b6d4);">
+      <div class="nc-card" style="--card-grad:linear-gradient(90deg,#10b981,#06b6d4)">
         <span class="nc-card-icon">🔀</span>
         <h3>選択肢＆分岐シナリオ</h3>
-        <p>あなたの選択が物語を変える！選択肢システムで読み手が能動的に物語に参加できます。</p>
+        <p>あなたの選択が物語を変える！読み手が能動的に物語に参加できます。</p>
       </div>
-
-      <div class="nc-card" style="--card-grad: linear-gradient(90deg,#f59e0b,#ef4444);">
+      <div class="nc-card" style="--card-grad:linear-gradient(90deg,#f59e0b,#ef4444)">
         <span class="nc-card-icon">💾</span>
         <h3>セーブ＆ロード</h3>
-        <p>複数のセーブスロットに対応。好きなところから再開できるので、じっくりと物語を楽しめます。</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Playセクション -->
-  <section class="nc-section nc-split">
-    <div class="nc-split-inner">
-      <div class="nc-split-visual">🎮</div>
-      <div class="nc-split-text">
-        <div class="nc-tag-sm">✦ PLAY MODE</div>
-        <h2>物語の世界に<br>とびこもう！</h2>
-        <p>丁寧に作り込まれた演出とビジュアルで紡がれるノベルを、のんびり読んでみてください。テキスト速度や文字サイズも自分好みにカスタマイズできます📚</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="nc-section" style="background:#fdf8ff;">
-    <div class="nc-split-inner nc-rev">
-      <div class="nc-split-visual">🛠️</div>
-      <div class="nc-split-text">
-        <div class="nc-tag-sm">✦ CRAFT MODE</div>
-        <h2>あなたの物語を<br>カタチにしよう！</h2>
-        <p>Craftモードでキャラクター・背景・セリフ・選択肢を自由に組み合わせてノベルが作れます。むずかしい知識は一切不要。頭の中のアイデアをそのまま形にしてください🌈</p>
+        <p>複数のセーブスロットに対応。好きなところから再開できます。</p>
       </div>
     </div>
   </section>
 
   <!-- 開発中バナー -->
-  <section class="nc-section nc-dev">
-    <div class="nc-dev-badge">🚧 NOW IN DEVELOPMENT</div>
-    <h2>現在、がんばって開発中です！</h2>
-    <p>ノベクラはまだ開発途中です。<br>新機能や進捗は開発日記でこまめにお知らせしていきます。<br>ぜひチェックしてみてください🎉</p>
-    <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>" class="nc-btn nc-btn-primary">📝 開発日記を読む</a>
+  <section class="nc-dev">
+    <img class="nc-dev-bg-img" src="<?php echo $theme_url; ?>/novel-assets/bg/school_gate.png" alt="">
+    <div class="nc-dev-inner">
+      <div class="nc-dev-badge">🚧 NOW IN DEVELOPMENT</div>
+      <h2>現在、がんばって開発中です！</h2>
+      <p>ノベクラはまだ開発途中です。<br>新機能や進捗は開発日記でこまめにお知らせしていきます🎉</p>
+      <a href="<?php echo get_permalink(get_option('page_for_posts')); ?>" class="nc-btn nc-btn-primary">📝 開発日記を読む</a>
+    </div>
   </section>
 
   <!-- フッター -->
@@ -557,23 +536,27 @@ get_header();
 <script>
 // デモタイプライター
 (function() {
+  var baseUrl = '<?php echo $theme_url; ?>/novel-assets/characters/';
   var scenes = [
-    { name: 'ナレーター',  text: 'ここは、あなたの物語が始まる場所。' },
-    { name: 'ユイ 💜',    text: 'ねえ、一緒に物語を作ってみない？' },
-    { name: 'ナレーター',  text: '選択肢が現れた…どうする？' },
-    { name: 'アオ 💙',    text: 'よし！ノベクラで冒険を始めよう！' },
+    { name: 'アリス',  img: 'chara1.png', text: 'ここは、あなたの物語が始まる場所よ。' },
+    { name: 'ルナ',   img: 'chara2.png', text: 'ねえ、一緒に物語を作ってみない？絶対楽しいって！' },
+    { name: 'ミア',   img: 'chara3.png', text: 'どんな物語でも…きっと素敵になるよ。' },
+    { name: 'サクラ', img: 'chara4.png', text: 'よし！ノベクラで最高の冒険を始めよう！' },
   ];
-  var nameEl = document.getElementById('nc-demo-name');
-  var textEl = document.getElementById('nc-demo-content');
+  var nameEl    = document.getElementById('nc-demo-name');
+  var textEl    = document.getElementById('nc-demo-content');
+  var charImg   = document.getElementById('nc-demo-char-img');
   if (!nameEl || !textEl) return;
+
   var si = 0, ci = 0, typing = true;
   function tick() {
     var s = scenes[si];
     nameEl.textContent = s.name;
+    if (charImg) charImg.src = baseUrl + s.img;
     if (typing) {
       textEl.textContent = s.text.slice(0, ci++);
       if (ci > s.text.length) { typing = false; setTimeout(tick, 2200); return; }
-      setTimeout(tick, 75);
+      setTimeout(tick, 70);
     } else {
       ci = 0; typing = true;
       si = (si + 1) % scenes.length;
@@ -583,7 +566,6 @@ get_header();
   setTimeout(tick, 600);
 })();
 
-// スムーズスクロール
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   a.addEventListener('click', function(e) {
     var t = document.querySelector(this.getAttribute('href'));
