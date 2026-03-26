@@ -38,7 +38,8 @@ add_action('admin_notices', function () {
     <div class="notice notice-success" style="padding:16px 20px;border-left:4px solid #1d9bf0;">
         <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <div style="flex:1;min-width:200px;">
-                <strong style="font-size:15px;">🎉 記事を公開しました！Xでシェアしますか？</strong><br>
+                <strong style="font-size:15px;">🎉 記事を公開しました！Xでシェアしますか？</strong>
+                <span style="background:#fff3cd;color:#856404;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;margin-left:8px;">⚠️ @novecra でログイン中か確認！</span><br>
                 <span style="color:#555;font-size:13px;margin-top:4px;display:block;">
                     以下の内容でツイートが開きます：<br>
                     <code style="background:#f5f5f5;padding:6px 10px;border-radius:4px;display:block;margin-top:6px;white-space:pre-wrap;font-size:12px;">【開発日記更新📝】
