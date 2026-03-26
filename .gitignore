@@ -1,0 +1,20 @@
+# WordPress設定ファイル（DBパスワード等が含まれるためgit管理外）
+wp-config.php
+
+# アップロードされたメディアファイル（容量が大きいためgit管理外）
+wp-content/uploads/
+
+# キャッシュ・一時ファイル
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup-db/
+
+# ログ
+*.log
+error_log
+
+# macOS
+.DS_Store
+
+# サーバー設定（サーバー側で管理）
+.htaccess
