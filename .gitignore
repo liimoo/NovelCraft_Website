@@ -16,5 +16,8 @@ error_log
 # macOS
 .DS_Store
 
+# FTP認証情報（絶対にgit管理しない）
+.ftpconfig
+
 # サーバー設定（サーバー側で管理）
 .htaccess
