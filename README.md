@@ -26,7 +26,7 @@ Claude Codeに以下のように伝えるだけでOKです：
 ```
 
 AIが行う作業：
-1. WordPress管理画面から記事を作成・公開
+1. WordPress REST APIで記事を作成・公開（`.wpconfig`の認証情報を使用）
 2. ツイート文を生成して提示
 
 ### X（Twitter）への投稿
@@ -67,7 +67,19 @@ FTP_REMOTE_DIR=/wordpress/
 
 FTP情報はロリポップ管理画面 → サーバーの管理・設定 → FTP情報 で確認できます。
 
-### 4. deploy.shに実行権限を付与
+### 4. REST API設定ファイルを作成
+
+`.wpconfig` ファイルを作成（このファイルはgit管理外）：
+
+```
+WP_API=https://novecra.deca.jp/wordpress/wp-json/wp/v2
+WP_USER=WordPressユーザー名
+WP_PASS=アプリケーションパスワード
+```
+
+Application Passwordの発行：WordPress管理画面 → プロフィール → 「アプリケーションパスワード」
+
+### 5. deploy.shに実行権限を付与
 
 ```bash
 chmod +x deploy.sh
@@ -136,5 +148,6 @@ git commit --no-verify -m "コミットメッセージ"
 - `wp-config.php` はDBパスワードが含まれるためgit管理外（絶対にcommitしない）
 - `.ftpconfig` はFTPパスワードが含まれるためgit管理外（各自で作成）
 - `wp-content/uploads/` はメディアファイルのためgit管理外
-- 記事投稿・設定変更はWordPress管理画面から行う
+- 記事投稿はREST API（`.wpconfig`）で行う。管理画面からでも可
 - テーマ・プラグインのファイル変更のみgitで管理する
+- `.wpconfig` はAPI認証情報が含まれるためgit管理外（各自で作成）

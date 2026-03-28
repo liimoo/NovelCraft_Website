@@ -19,5 +19,8 @@ error_log
 # FTP認証情報（絶対にgit管理しない）
 .ftpconfig
 
+# WordPress REST API認証情報（絶対にgit管理しない）
+.wpconfig
+
 # サーバー設定（サーバー側で管理）
 .htaccess
