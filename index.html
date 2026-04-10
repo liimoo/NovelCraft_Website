@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ノベクラ - ゲーム作りも楽しくないと！</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pink: #f4a7b9;
+      --lavender: #c9b8f0;
+      --light-lavender: #ede8fb;
+      --white: #ffffff;
+      --text: #4a3f5c;
+      --text-light: #7a6e8a;
+    }
+
+    body {
+      font-family: 'Hiragino Maru Gothic ProN', 'Rounded Mplus 1c', sans-serif;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    /* ヒーロー */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/images/hero_bg.png') center/cover no-repeat;
+      filter: brightness(0.55);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(201,184,240,0.45) 0%, rgba(244,167,185,0.35) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 24px;
+    }
+
+    .hero-logo {
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 16px rgba(100,60,140,0.4);
+      margin-bottom: 16px;
+    }
+
+    .hero-logo span {
+      color: var(--pink);
+    }
+
+    .hero-tagline {
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 40px;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 16px 48px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(201,184,240,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(201,184,240,0.6);
+    }
+
+    .hero-cta.disabled {
+      background: rgba(255,255,255,0.3);
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* キャラクター */
+    .hero-characters {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      pointer-events: none;
+    }
+
+    .hero-characters img {
+      height: clamp(180px, 40vh, 340px);
+      opacity: 0.85;
+    }
+
+    /* 特徴セクション */
+    .features {
+      background: var(--light-lavender);
+      padding: 80px 24px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 56px;
+      letter-spacing: 0.04em;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--pink), var(--lavender));
+      border-radius: 2px;
+      margin: 12px auto 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(100,60,140,0.08);
+      transition: transform 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      font-size: 2.6rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* スクリーンショット */
+    .screenshots {
+      padding: 80px 24px;
+      background: var(--white);
+    }
+
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .screenshots-grid img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(100,60,140,0.12);
+      transition: transform 0.2s;
+    }
+
+    .screenshots-grid img:hover {
+      transform: scale(1.02);
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--lavender), var(--pink));
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .cta-section p {
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 36px;
+      font-size: 1rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--white);
+      color: var(--lavender);
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 16px 52px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta-btn.disabled {
+      opacity: 0.6;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* フッター */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--pink);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヒーロー -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-logo"><span>ノベクラ</span></h1>
+      <p class="hero-tagline">ゲーム作りも楽しくないと！</p>
+      <a href="#" class="hero-cta disabled">準備中...</a>
+    </div>
+    <div class="hero-characters">
+      <img src="assets/images/chara2.png" alt="">
+      <img src="assets/images/chara1.png" alt="">
+    </div>
+  </section>
+
+  <!-- 特徴 -->
+  <section class="features">
+    <h2 class="section-title">ノベクラでできること</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <div class="feature-title">直感的に作れる</div>
+        <p class="feature-desc">難しい操作はありません。クリックだけでセリフや演出を並べて、あなただけのノベルゲームが完成します。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <div class="feature-title">知識ゼロでOK</div>
+        <p class="feature-desc">プログラミングや専門知識は一切不要。ゲームを作ったことがない人でも、すぐに始められます。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <div class="feature-title">作って、遊べる</div>
+        <p class="feature-desc">作ったノベルはそのままプレイできます。自分でつくって、自分で楽しんで、みんなと共有しよう。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- スクリーンショット -->
+  <section class="screenshots">
+    <h2 class="section-title">ゲームの世界</h2>
+    <div class="screenshots-grid">
+      <img src="assets/images/classroom.png" alt="教室">
+      <img src="assets/images/school_gate.png" alt="学校の門">
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>さあ、物語を作ろう！</h2>
+    <p>ノベクラは現在開発中です。リリースをお楽しみに！</p>
+    <a href="#" class="cta-btn disabled">準備中...</a>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <p>&copy; 2025 ノベクラ &nbsp;|&nbsp; <a href="https://x.com/novecra" target="_blank">X @novecra</a></p>
+  </footer>
+
+</body>
+</html>
