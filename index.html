@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ノベクラ - ゲーム作りも楽しくないと！</title>
+  <title>ノベルクラフト - ゲーム作りも楽しくないと！</title>
   <style>
     * {
       margin: 0;
@@ -207,6 +207,44 @@
       transform: scale(1.02);
     }
 
+    /* プラットフォーム */
+    .platforms {
+      background: var(--light-lavender);
+      padding: 64px 24px;
+      text-align: center;
+    }
+
+    .platforms-list {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .platform-badge {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 20px 32px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      box-shadow: 0 4px 16px rgba(100,60,140,0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .platform-badge .badge-icon {
+      font-size: 1.6rem;
+    }
+
+    .platform-note {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
     /* CTA */
     .cta-section {
       background: linear-gradient(135deg, var(--lavender), var(--pink));
@@ -317,16 +355,39 @@
     </div>
   </section>
 
+  <!-- プラットフォーム -->
+  <section class="platforms">
+    <h2 class="section-title">配信予定プラットフォーム</h2>
+    <div class="platforms-list">
+      <div class="platform-badge"><span class="badge-icon">📱</span>iOS</div>
+      <div class="platform-badge"><span class="badge-icon">🤖</span>Android</div>
+      <div class="platform-badge"><span class="badge-icon">🎮</span>Steam</div>
+    </div>
+    <p class="platform-note">リリース時期は未定です。最新情報は
+      <a href="https://x.com/novecra" target="_blank" style="display:inline-flex;align-items:center;gap:4px;color:var(--lavender);font-weight:700;text-decoration:none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @novecra
+      </a> でお知らせします。</p>
+  </section>
+
   <!-- CTA -->
   <section class="cta-section">
     <h2>さあ、物語を作ろう！</h2>
     <p>ノベクラは現在開発中です。リリースをお楽しみに！</p>
-    <a href="#" class="cta-btn disabled">準備中...</a>
+    <a href="https://x.com/novecra" target="_blank" class="cta-btn" style="display:inline-flex;align-items:center;gap:10px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @novecra をフォロー
+    </a>
   </section>
 
   <!-- フッター -->
   <footer>
-    <p>&copy; 2025 ノベクラ &nbsp;|&nbsp; <a href="https://x.com/novecra" target="_blank">X @novecra</a></p>
+    <p>&copy; 2025 ノベクラ &nbsp;|&nbsp;
+      <a href="https://x.com/novecra" target="_blank" style="display:inline-flex;align-items:center;gap:4px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @novecra
+      </a>
+    </p>
   </footer>
 
 </body>
